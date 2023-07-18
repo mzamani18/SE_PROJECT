@@ -18,4 +18,5 @@ func main() {
 	initilizers.DB.AutoMigrate(&entity.CartItem{})
 	initilizers.DB.AutoMigrate(&entity.Payment{})
 	initilizers.DB.AutoMigrate(&entity.Wallet{})
+	initilizers.DB.AutoMigrate(&entity.Comment{})
 }

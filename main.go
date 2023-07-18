@@ -29,9 +29,9 @@ func main() {
 
 	// payment actions
 	router.POST("/v1/payment", middleware.RequireAuth, controller.PaymentAction)
-	router.POST("/v1/payment/deposit", middleware.RequireAuth, controller.Deposit)              // Done // test passed
-	router.POST("/v1/voucher/add", middleware.RequireAuth, controller.AddVoucherToCart)         // Done // test passed
-	router.POST("/v1/voucher/remove", middleware.RequireAuth, controller.RemoveVoucherFromCart) // Done // test passed
+	router.POST("/v1/payment/deposit", middleware.RequireAuth, controller.Deposit)             // Done // test passed
+	router.POST("/v1/voucher/add", middleware.RequireAuth, controller.AddVoucherToCart)        // Done // test passed
+	router.GET("/v1/voucher/remove", middleware.RequireAuth, controller.RemoveVoucherFromCart) // Done // test passed
 
 	// home page actiions
 	router.POST("/v1/ticket/add", middleware.RequireAuth, controller.AddTicket) // Done // test passed
@@ -40,6 +40,10 @@ func main() {
 
 	// profile actions
 	router.GET("/v1/profile/get-tickets", middleware.RequireAuth, controller.UsersTickets) // Done // test passed
+
+	// comment actions
+	router.POST("v1/comment/add/:ticket_id", middleware.RequireAuth, controller.AddComment)   // Done // test passed
+	router.GET("v1/comments/:ticket_id", middleware.RequireAuth, controller.CommentsOfTicket) // Done // test passed
 
 	router.Run()
 }

@@ -4,6 +4,7 @@ import (
 	entity "TikOn/Entity"
 	initilizers "TikOn/Initilizers"
 	models "TikOn/Models"
+	view "TikOn/View"
 	"net/http"
 	"strconv"
 
@@ -13,30 +14,20 @@ import (
 func CartAction(c *gin.Context) {
 	user_id, isExist := c.Get("user")
 
-	var user entity.User
-	initilizers.DB.First(&user, (user_id.(entity.User)).ID)
-
 	if !isExist {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "user not found, please log in",
 		})
 		return
 	}
+	cart, cartItems, err := view.CartView(int(user_id.(entity.User).ID))
 
-	var cart entity.Cart
-
-	initilizers.DB.Where("user_id = ? AND cart_status = ?", user.ID, entity.OPEN).First(&cart)
-
-	if cart.ID == 0 {
+	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
-			"message": "your cart is empty, please add ticket to your cart",
+			"message": err.Error(),
 		})
 		return
 	}
-
-	var cartItems []entity.CartItem
-
-	initilizers.DB.Where("cart_id = ?", cart.ID).Find(&cartItems)
 
 	c.JSON(http.StatusOK, gin.H{
 		"cart_items_data": cartItems,

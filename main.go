@@ -29,9 +29,9 @@ func main() {
 
 	// payment actions
 	router.POST("/v1/payment", middleware.RequireAuth, controller.PaymentAction)
-	router.POST("/v1/payment/deposit", middleware.RequireAuth, controller.Deposit) // Done // test passed
-	// router.POST("/v1/voucher/add", middleware.RequireAuth)
-	// router.POST("/v1/voucher/remove", middleware.RequireAuth)
+	router.POST("/v1/payment/deposit", middleware.RequireAuth, controller.Deposit)              // Done // test passed
+	router.POST("/v1/voucher/add", middleware.RequireAuth, controller.AddVoucherToCart)         // Done // test passed
+	router.POST("/v1/voucher/remove", middleware.RequireAuth, controller.RemoveVoucherFromCart) // Done // test passed
 
 	// home page actiions
 	router.POST("/v1/ticket/add", middleware.RequireAuth, controller.AddTicket) // Done // test passed

@@ -18,6 +18,7 @@ type Voucher struct {
 	gorm.Model
 	VoucherDiscount int
 	ExpDate         time.Time
+	VoucherCode     string
 	VoucherStatus   VoucherStatus `gorm:"type:enum('not_used', 'used', 'cart_reserve')";"column:CartStatus"`
 }
 
@@ -25,4 +26,5 @@ type VoucherData struct {
 	VoucherDiscount int
 	ExpDate         time.Time
 	VoucherStatus   VoucherStatus
+	VoucherCode     string
 }

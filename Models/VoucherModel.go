@@ -16,7 +16,7 @@ func AddVoucher(userId int, voucherCode string) error {
 	}
 
 	var voucher entity.Voucher
-	initilizers.DB.Where("voucher_code = ? and status = ? ", voucherCode, entity.NOT_USED).First(&voucher)
+	initilizers.DB.Where("voucher_code = ? and voucher_status = ? ", voucherCode, entity.NOT_USED).First(&voucher)
 
 	if voucher.ID == 0 {
 		return errors.New("invalid voucher code, voucher not found")
@@ -26,7 +26,7 @@ func AddVoucher(userId int, voucherCode string) error {
 	initilizers.DB.Model(&cart).Update("payable_price", math.Max(float64(cart.PayablePrice-voucher.VoucherDiscount), 0))
 	initilizers.DB.Model(&cart).Update("voucher_id", voucher.ID)
 
-	initilizers.DB.Model(&voucher).Update("status", entity.USED)
+	initilizers.DB.Model(&voucher).Update("voucher_status", entity.USED)
 
 	return nil
 }
@@ -50,7 +50,7 @@ func RemoveVoucher(userId int) error {
 	initilizers.DB.Model(&cart).Update("voucher_discount", 0)
 	initilizers.DB.Model(&cart).Update("voucher_id", 0)
 
-	initilizers.DB.Model(&voucher).Update("status", entity.NOT_USED)
+	initilizers.DB.Model(&voucher).Update("voucher_status", entity.NOT_USED)
 
 	return nil
 }
